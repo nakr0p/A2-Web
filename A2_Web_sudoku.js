@@ -22,6 +22,12 @@ let y;
 let xStart;
 let yStart;
 
+function preload() {
+    // In a real p5.js sketch, you would use this to load your file:
+    // numberTable = loadSudoku('sudoku.txt');
+    // For this translation, we'll keep the setup() call.
+}
+
 function setup() {
     createCanvas(displayWidth, displayHeight); 
     textAlign(CENTER, CENTER);
@@ -48,6 +54,25 @@ function draw() {
     drawSudokuTable(xStart, yStart, distanceBetweenLine, size);
     drawNumber(xStart, yStart, distanceBetweenLine);
     drawSelect(xStart, yStart, distanceBetweenLine);
+}
+
+function loadSudoku(fileName) {
+    let table = [];
+    
+    // loadStrings is the p5.js equivalent for reading a text file
+    let lines = loadStrings(fileName); 
+    
+    // lines is an array of strings, where each string is a row
+    for (let i = 0; i < lines.length; i++) {
+        let row = [];
+        // Convert each character in the string to an integer
+        for (let j = 0; j < lines[i].length; j++) {
+            row.push(int(lines[i].charAt(j)));
+        }
+        table.push(row);
+    }
+    
+    return table;
 }
 
 function checkSudokuRow(x, y, d) {
