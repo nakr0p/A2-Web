@@ -16,6 +16,7 @@ let size = 800;
 let distanceBetweenLine = size / 9;
 
 let selected = 0;
+let gameStatus; 
 
 let x; 
 let y;
@@ -34,6 +35,8 @@ function setup() {
     textSize(distanceBetweenLine * 0.6); 
     
     loadStrings('table.txt', loadSudokuCallback);
+    
+    gameStatus = true;
 }
 
 function draw() {
@@ -61,7 +64,7 @@ function loadSudokuCallback(lines) {
             table.push(row);
         }
     }
-    // Update the global numberTable after loading
+    
     if (table.length === 9) {
         numberTable = table;
     }
