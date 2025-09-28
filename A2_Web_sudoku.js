@@ -43,6 +43,7 @@ function draw() {
 
     checkSudokuRow(xStart, yStart, distanceBetweenLine); 
     checkSudokuCol(xStart, yStart, distanceBetweenLine);
+    checkSudokuBox3x3(xStart, yStart, distanceBetweenLine);
     
     drawSudokuTable(xStart, yStart, distanceBetweenLine, size);
     drawNumber(xStart, yStart, distanceBetweenLine);
@@ -89,6 +90,43 @@ function checkSudokuCol(x, y, d) {
                     
                     noFill();
                     stroke(0);
+                }
+            }
+        }
+    }
+}
+
+function checkSudokuBox3x3(x, y, d) {
+    for (let boxRow = 0; boxRow < 9; boxRow += 3) {
+        for (let boxCol = 0; boxCol < 9; boxCol += 3) {
+            
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    let currentRow = boxRow + row;
+                    let currentCol = boxCol + col;
+                    
+                    for (let i = 0; i < 3; i++) {
+                        for (let j = 0; j < 3; j++) {
+                            let checkRow = boxRow + i;
+                            let checkCol = boxCol + j;
+                            
+                            if (currentRow !== checkRow || currentCol !== checkCol) {
+                                let currentNum = numberTable[currentRow][currentCol];
+                                let checkNum = numberTable[checkRow][checkCol];
+                                
+                                if (currentNum === checkNum && currentNum !== 0) {
+                                    fill(255, 0, 0, 50);
+                                    noStroke();
+                                    
+                                    rect(x + d * currentCol, y + d * currentRow, d, d);
+                                    rect(x + d * checkCol, y + d * checkRow, d, d);
+                                    
+                                    noFill();
+                                    stroke(0);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
