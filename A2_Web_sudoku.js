@@ -1,13 +1,13 @@
 let numberTable = [
-    [1, 0, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 0, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 0, 5, 6, 7, 8, 9],
-    [0, 2, 3, 4, 5, 6, 7, 8, 0],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [0, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 0, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
 let selectNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -22,12 +22,6 @@ let y;
 let xStart;
 let yStart;
 
-function preload() {
-    // In a real p5.js sketch, you would use this to load your file:
-    // numberTable = loadSudoku('sudoku.txt');
-    // For this translation, we'll keep the setup() call.
-}
-
 function setup() {
     createCanvas(displayWidth, displayHeight); 
     textAlign(CENTER, CENTER);
@@ -39,9 +33,7 @@ function setup() {
     
     textSize(distanceBetweenLine * 0.6); 
     
-    while (numberTable.length < 9) {
-        numberTable.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    }
+    loadStrings('table.txt', loadSudokuCallback);
 }
 
 function draw() {
@@ -56,23 +48,23 @@ function draw() {
     drawSelect(xStart, yStart, distanceBetweenLine);
 }
 
-function loadSudoku(fileName) {
+function loadSudokuCallback(lines) {
     let table = [];
     
-    // loadStrings is the p5.js equivalent for reading a text file
-    let lines = loadStrings(fileName); 
-    
-    // lines is an array of strings, where each string is a row
     for (let i = 0; i < lines.length; i++) {
-        let row = [];
-        // Convert each character in the string to an integer
-        for (let j = 0; j < lines[i].length; j++) {
-            row.push(int(lines[i].charAt(j)));
+        let line = lines[i].trim();
+        if (line.length === 9) {
+            let row = [];
+            for (let j = 0; j < line.length; j++) {
+                row.push(int(line.charAt(j)));
+            }
+            table.push(row);
         }
-        table.push(row);
     }
-    
-    return table;
+    // Update the global numberTable after loading
+    if (table.length === 9) {
+        numberTable = table;
+    }
 }
 
 function checkSudokuRow(x, y, d) {
