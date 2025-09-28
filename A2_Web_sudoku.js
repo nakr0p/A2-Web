@@ -42,6 +42,7 @@ function draw() {
     background(255); 
 
     checkSudokuRow(xStart, yStart, distanceBetweenLine); 
+    checkSudokuCol(xStart, yStart, distanceBetweenLine);
     
     drawSudokuTable(xStart, yStart, distanceBetweenLine, size);
     drawNumber(xStart, yStart, distanceBetweenLine);
@@ -62,6 +63,29 @@ function checkSudokuRow(x, y, d) {
                     
                     rect(x + d * col, y + d * row, d, d);
                     rect(x + d * (col + i), y + d * row, d, d);
+                    
+                    noFill();
+                    stroke(0);
+                }
+            }
+        }
+    }
+}
+
+function checkSudokuCol(x, y, d) {
+    for (let col = 0; col < 9; col++) {
+        for (let row = 0; row < 9; row++) {
+            for (let i = 1; row + i < 9; i++) {
+                
+                let currentNum = numberTable[row][col];
+                let compareNum = numberTable[row + i][col];
+                
+                if (currentNum === compareNum && currentNum !== 0) {
+                    fill(255, 0, 0, 50);
+                    noStroke();
+                    
+                    rect(x + d * col, y + d * row, d, d);
+                    rect(x + d * col, y + d * (row + i), d, d);
                     
                     noFill();
                     stroke(0);
