@@ -1,4 +1,12 @@
 let numberTable = [
+    [1, 0, 3, 4, 5, 6, 7, 8, 9],
+    [1, 2, 3, 4, 0, 6, 7, 8, 9],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [1, 2, 3, 0, 5, 6, 7, 8, 9],
+    [0, 2, 3, 4, 5, 6, 7, 8, 0],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [0, 2, 3, 4, 5, 6, 7, 8, 9],
+    [1, 0, 3, 4, 5, 6, 7, 8, 9],
     [1, 2, 3, 4, 5, 6, 7, 8, 9],
 ];
 
@@ -33,9 +41,34 @@ function setup() {
 function draw() {
     background(255); 
 
+    checkSudokuRow(xStart, yStart, distanceBetweenLine); 
+    
     drawSudokuTable(xStart, yStart, distanceBetweenLine, size);
     drawNumber(xStart, yStart, distanceBetweenLine);
     drawSelect(xStart, yStart, distanceBetweenLine);
+}
+
+function checkSudokuRow(x, y, d) {
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            for (let i = 1; col + i < 9; i++) {
+                
+                let currentNum = numberTable[row][col];
+                let compareNum = numberTable[row][col + i];
+
+                if (currentNum === compareNum && currentNum !== 0) {
+                    fill(255, 0, 0, 50);
+                    noStroke();
+                    
+                    rect(x + d * col, y + d * row, d, d);
+                    rect(x + d * (col + i), y + d * row, d, d);
+                    
+                    noFill();
+                    stroke(0);
+                }
+            }
+        }
+    }
 }
 
 function drawSudokuTable(x, y, d, s) {
@@ -69,7 +102,7 @@ function drawSelect(x, y, d) {
     
     noFill();
     stroke(0);
-    strokeWeight(1);
+    strokeWeight(3);
     rect(x + d * 10, y, d, d * 9); 
     
     while (col < 9) {
@@ -82,11 +115,12 @@ function drawSelect(x, y, d) {
         }
 
         stroke(0);
-        strokeWeight(1);
+        strokeWeight(3);
         rect(x + d * 10, y + (col * d), d, d);
         
         fill(0);
         text(output, x + d * 10 + (d / 2), y + (col * d) + (d / 2));
+        noFill();
         col++;
     }
 }
