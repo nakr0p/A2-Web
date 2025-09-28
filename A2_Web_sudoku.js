@@ -10,19 +10,22 @@ let number_table = [
   [1,2,3,4,5,6,7,8,9]
 ];
 
+let select_number = [1,2,3,4,5,6,7,8,9];
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight); 
   textAlign(CENTER, CENTER);
 }
 
 function draw() {
   background(255);
-  draw_sudoku_table(600);
+  draw_sudoku_table(800);
+  draw_select();
 }
 
 function draw_sudoku_table(s) {
-  let x = (width / 2) - (s / 2);
-  let y = (height / 2) - (s / 2);
+  let x = (width / 2) - (s / 2); 
+  let y = (height / 2) - (s / 2); 
   let d = s / 9;
 
   
@@ -32,8 +35,8 @@ function draw_sudoku_table(s) {
     } else {
       strokeWeight(1);
     }
-    line(x + d * i, y, x + d * i, y + s); 
-    line(x, y + d * i, x + s, y + d * i); 
+    line(x + d * i, y, x + d * i, y + s);
+    line(x, y + d * i, x + s, y + d * i);
   }
 
   
@@ -53,5 +56,28 @@ function draw_number(x, y, d) {
       let output = number_table[row][col];
       text(output, x + d * col + d / 2, y + d * row + d / 2);
     }
+  }
+}
+
+function draw_select() {
+  let sqr_size = 80;
+  textSize(sqr_size * 0.6);
+
+  for (let col = 0; col < 9; col++) {
+    let output = select_number[col];
+
+    
+    strokeWeight(3);
+    noFill();
+    rect(width - 200, 100 + (col * sqr_size), sqr_size, sqr_size);
+
+    
+    strokeWeight(5);
+    noFill();
+    rect(width - 200, 100 + (col * sqr_size), sqr_size, sqr_size);
+
+    
+    fill(0);
+    text(output, width - 200 + sqr_size / 2, 100 + (col * sqr_size) + sqr_size / 2);
   }
 }
