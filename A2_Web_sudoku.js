@@ -6,12 +6,12 @@ let select_number = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let distance_between_line;
 let selected = 0;
 let game_status = false;
+let check_status = false; // Added based on the new check_sudoku logic
 
 function setup() {
     createCanvas(700, 700);
     distance_between_line = size / 9;
     
-    // Initialize number_table (assuming it should be a 9x9 array)
     for (let i = 0; i < 9; i++) {
         number_table[i] = new Array(9).fill(0);
     }
@@ -25,32 +25,27 @@ function draw() {
     draw_select(x_start, y_start, distance_between_line);
     pick_number(x_start, y_start, distance_between_line);
     input_number(x_start, y_start, distance_between_line);
-    
-    check_sudoku_row(x_start, y_start, distance_between_line);
-    check_sudoku_col(x_start, y_start, distance_between_line);
-    check_sudoku_box_3x3(x_start, y_start, distance_between_line);
-    
     check_sudoku(x_start, y_start, distance_between_line);
 }
 
 function draw_sudoku_table(x, y, d, s) {
-    
+
 }
 
 function draw_number(x, y, d) {
-    
+
 }
 
 function draw_select(x, y, d) {
-    
+
 }
 
 function pick_number(x, y, d) {
-    
+
 }
 
 function input_number(x, y, d) {
-    
+
 }
 
 function check_sudoku_row(x, y, d) {
@@ -68,10 +63,15 @@ function check_sudoku_row(x, y, d) {
                     rect(x + d * (col + i), y + d * row, d, d);
                     noFill();
                     game_status = false;
-                }
                     
-                if (number_table[row][col] == 0) {
-                    game_status = false;
+                    // The logic here is exactly as in the Python snippet
+                    if (number_table[row][col] == 0) {
+                        return false;
+                    }
+                } else if (number_table[row][col] == 0) {
+                    return false;
+                } else {
+                    return true;
                 }
 
                 i++;
@@ -81,6 +81,7 @@ function check_sudoku_row(x, y, d) {
         row++;
     }
 }
+
 
 function check_sudoku_col(x, y, d) {
     
@@ -97,6 +98,15 @@ function check_sudoku_col(x, y, d) {
                     rect(x + d * col, y + d * (row + i), d, d);
                     noFill();
                     game_status = false;
+                    return false;
+                } 
+                
+                else if (number_table[row][col] == 0) {
+                    return false;
+                }
+                
+                else {
+                    return true;
                 }
 
                 i++;
@@ -136,6 +146,14 @@ function check_sudoku_box_3x3(x, y, d) {
                                 rect(x + d * check_col, y + d * check_row, d, d);
                                 noFill();
                                 game_status = false;
+                                
+                                return false;
+                            }
+                            
+                            else if (number_table[row][col] == 0) {
+                                return false;
+                            } else {
+                                return true;
                             }
 
                             j++;
@@ -155,15 +173,19 @@ function check_sudoku_box_3x3(x, y, d) {
 
 function check_sudoku(x, y, d) {
     
+    // The Python snippet added 'global check_status'
+    
+    // These calls now act as both checks and drawing/setting game_status
     check_sudoku_row(x, y, d);
     check_sudoku_col(x, y, d);
     check_sudoku_box_3x3(x, y, d);
+    
+    // The final check logic
+    if (check_sudoku_row(x, y, d) && check_sudoku_col(x, y, d) && check_sudoku_box_3x3(x, y, d)) {
+        check_status = true;
+    }
 }
 
 function load_sudoku(file_name) {
 
-    // File loading logic is specific to p5.js (e.g., loadStrings)
-    // The structure is kept as requested, but the implementation is conceptual.
-    
-    // return table 
 }
