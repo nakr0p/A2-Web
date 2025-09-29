@@ -77,6 +77,7 @@ function check_sudoku_row(x, y, d) {
         }
         row++;
     }
+    return true;
 }
     
 function alert_sudoku_row(x, y, d) {
@@ -133,6 +134,7 @@ function check_sudoku_col(x, y, d) {
         }
         col++;
     }
+    return true;
 }
     
 function alert_sudoku_col(x, y, d) {
@@ -209,6 +211,7 @@ function check_sudoku_box_3x3(x, y, d) {
         }
         box_row += 3;
     }
+    return true;
 }
     
 function alert_sudoku_box_3x3(x, y, d) {
