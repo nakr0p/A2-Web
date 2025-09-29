@@ -283,8 +283,6 @@ function alert_sudoku_box_3x3(x, y, d) {
 
 function check_sudoku(x, y, d) {
     
-    // The Python code updated these to be global and modified the check logic
-    
     alert_sudoku_row(x, y, d);
     alert_sudoku_col(x, y, d);
     alert_sudoku_box_3x3(x, y, d);
