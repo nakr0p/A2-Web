@@ -33,6 +33,19 @@ function draw() {
     pick_number(x_start, y_start, distance_between_line);
     input_number(x_start, y_start, distance_between_line);
     check_sudoku(x_start, y_start, distance_between_line);
+    
+    if (game_status == false) {
+        
+        draw_sudoku_table(x_start, y_start, distance_between_line, size);
+        draw_number(x_start, y_start, distance_between_line);
+        draw_select(x_start, y_start, distance_between_line);
+        pick_number(x_start, y_start, distance_between_line);
+        input_number(x_start, y_start, distance_between_line);
+        check_sudoku(x_start, y_start, distance_between_line);
+        
+    } else {
+        text("YOU WIN", width / 2, height / 2);
+    }
 }
 
 function draw_sudoku_table(x, y, d, s) {
@@ -270,12 +283,15 @@ function alert_sudoku_box_3x3(x, y, d) {
 
 function check_sudoku(x, y, d) {
     
+    // The Python code updated these to be global and modified the check logic
+    
     alert_sudoku_row(x, y, d);
     alert_sudoku_col(x, y, d);
     alert_sudoku_box_3x3(x, y, d);
 
     if (check_sudoku_row(x, y, d) && check_sudoku_col(x, y, d) && check_sudoku_box_3x3(x, y, d)) {
         check_status = true;
+        game_status = true;
     }
 }
 
